@@ -5,13 +5,25 @@ export default class Login extends Component {
     state = {
         value: ''
     }
+
+    handleChange=(event)=> {
+        this.setState({value:event.target.value})
+    }
+
+    handleSubmit=(event)=>{
+        event.preventDefault()
+        let {value} = this.state;
+        if(value=='') {
+            alert('phoneNumber is empty ... ')
+        }
+    }
     render() {
         return (
             <div >
                 <Row className="login">
                     <Col sm={4}>
                         <Panel>
-                            <form>
+                            <form onSubmit={this.handleSubmit}>
                                 <FormGroup>
                                     <ControlLabel>please enter phoneNumber ....</ControlLabel>
                                     <FormControl

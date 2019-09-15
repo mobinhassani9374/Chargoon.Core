@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { actionCreators } from '../store/authorize';
 import { bindActionCreators } from 'redux';
-import { Redirect } from 'react-router'
 
 class Home extends Component {
 
