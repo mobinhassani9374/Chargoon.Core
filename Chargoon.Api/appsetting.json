@@ -1,0 +1,11 @@
+{
+  "ConnectionStrings": {
+    //"DefaultConnection": "Data Source=WIN-SQL\\MSSQLSERVER2016;Initial Catalog=AGP.V2;Persist Security Info=True;User ID=sa; Password=exir@123; MultipleActiveResultSets=True"
+    "DefaultConnection": "Data Source=185.51.200.186\\SQL2014,2014;Initial Catalog=AGP.V2;Persist Security Info=True;User ID=mobinhassani.AGP.V2; Password=b8a4E%y8; MultipleActiveResultSets=True"
+    //"DefaultConnection": "Data Source=.;Initial Catalog=AGP_Db;Integrated Security=True"
+  },
+  "WhiteSMSConfig": {
+    "UserApiKey": "b72a5cc173a833a55330709a",
+    "SecretKey": "C%56@G)1)$^*#Wu"
+  }
+}
