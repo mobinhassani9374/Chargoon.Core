@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Chargoon.DataLayer.Repositories;
+using Chargoon.DomainModels.Entities;
 using Chargoon.DomainModels.Models;
 using Chargoon.Messaging;
 using Chargoon.Utility;
@@ -35,13 +36,36 @@ namespace Chargoon.Core.Controllers
                 var user = _userRepository.FindByPhoneNumber(loginModel.PhoneNumber);
 
                 if (user == null)
-                    return Ok(ServiceResult.Error("کاربری یافت نشد"));
+                {
+                    // register user
+
+                    var activationCode = ActivationCodeGenerator.Generate();
+
+                    _userRepository.Create(new User
+                    {
+                        ActivationCode = activationCode,
+                        CreateActivationCodeDate = DateTime.Now,
+                        PhoneNumber = loginModel.PhoneNumber,
+                        SerialNumber = Guid.NewGuid().ToString()
+                    });
+
+                    var smsResponse = await _smsService
+                       .SendAsync(new List<string> { loginModel.PhoneNumber }, $"با سلام کد فعالسازی شما : {activationCode}");
+
+                    if (smsResponse.IsSuccessful)
+                    {
+                        return Ok(ServiceResult.Okay("کد فعالسازی برای کاربر ارسال شد"));
+                    }
+
+                    else
+                        return Ok(ServiceResult.Error($"خطا در ارسال پیامک از سمت پیامک سفید : {smsResponse.Message}"));
+                }
 
                 else
                 {
                     // generate activationCode
 
-                    var activationCode = new Random().Next(1000, 9999);
+                    var activationCode = ActivationCodeGenerator.Generate();
 
                     var smsResponse = await _smsService
                         .SendAsync(new List<string> { user.PhoneNumber }, $"با سلام کد فعالسازی شما : {activationCode}");
@@ -76,7 +100,7 @@ namespace Chargoon.Core.Controllers
 
                 else
                 {
-                    if (user.ActivationCode ==verificationModel.ActivationCode)
+                    if (user.ActivationCode == verificationModel.ActivationCode)
                     {
                         // check time
                         var nowDate = DateTime.Now;
