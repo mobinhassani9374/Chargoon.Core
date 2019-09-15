@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Col, Row, FormGroup, ControlLabel, FormControl, Button, Panel, Heading, Body } from 'react-bootstrap';
+import { Col, Row, FormGroup, ControlLabel, FormControl, Button, Panel} from 'react-bootstrap';
 
 export default class Login extends Component {
     state = {
@@ -21,7 +21,7 @@ export default class Login extends Component {
                                         onChange={this.handleChange}
                                     />
                                 </FormGroup>
-                                <Button type="submit">Submit</Button>
+                                <Button type="submit">send code</Button>
                             </form>
                         </Panel>
                     </Col>
