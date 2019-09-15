@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chargoon.DomainModels", "Ch
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chargoon.DataLayer", "Chargoon.DataLayer\Chargoon.DataLayer.csproj", "{52C6D386-342E-4425-8420-113F07626DAF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chargoon.Utility", "Chargoon.Utility\Chargoon.Utility.csproj", "{2AECBDB6-5CE2-40C1-BC84-39B25C8E0695}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{52C6D386-342E-4425-8420-113F07626DAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52C6D386-342E-4425-8420-113F07626DAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52C6D386-342E-4425-8420-113F07626DAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AECBDB6-5CE2-40C1-BC84-39B25C8E0695}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AECBDB6-5CE2-40C1-BC84-39B25C8E0695}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AECBDB6-5CE2-40C1-BC84-39B25C8E0695}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AECBDB6-5CE2-40C1-BC84-39B25C8E0695}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

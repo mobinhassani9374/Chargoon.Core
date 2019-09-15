@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Chargoon.DomainModels\Chargoon.DomainModels.csproj" />
+    <ProjectReference Include="..\Chargoon.Utility\Chargoon.Utility.csproj" />
   </ItemGroup>
 
 </Project>

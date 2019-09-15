@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
+using Chargoon.DataLayer.Repositories;
+using Chargoon.Messaging;
+using Chargoon.Messaging.Setting;
 
 namespace Chargoon.Core
 {
@@ -34,10 +37,21 @@ namespace Chargoon.Core
             });
 
 
+            services.AddHttpClient();
+
+            // sms 
+            services.AddScoped<Functions>();
+            services.AddScoped<RequestProvider>();
+            services.AddScoped<SmsService>();
+
+            services.Configure<Key>(config => Configuration.GetSection("WhiteSMSConfig").Bind(config));
+
             services.AddDbContext<AppDbContext>(options=> 
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
+
+            services.AddScoped<UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
