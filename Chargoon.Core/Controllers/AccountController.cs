@@ -6,6 +6,7 @@ using Chargoon.DataLayer.Repositories;
 using Chargoon.DomainModels.Models;
 using Chargoon.Messaging;
 using Chargoon.Utility;
+using Chargoon.Utility.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,11 +18,14 @@ namespace Chargoon.Core.Controllers
     {
         private readonly UserRepository _userRepository;
         private readonly SmsService _smsService;
+        private readonly JwtTokenGenerator _jwtTokenGenerator;
         public AccountController(UserRepository userRepository,
-            SmsService smsService)
+            SmsService smsService,
+            JwtTokenGenerator jwtTokenGenerator)
         {
             _userRepository = userRepository;
             _smsService = smsService;
+            _jwtTokenGenerator = jwtTokenGenerator;
         }
         [HttpPost("[action]")]
         public async Task<IActionResult> Login([FromBody]LoginModel loginModel)
@@ -59,6 +63,14 @@ namespace Chargoon.Core.Controllers
             }
 
             return Ok(ServiceResult.Error("model is not valid"));
+        }
+
+        [HttpPost("[action]")]
+        public IActionResult Verify()
+        {
+            var token = _jwtTokenGenerator.Generate();
+
+            return Ok(token);
         }
     }
 }
