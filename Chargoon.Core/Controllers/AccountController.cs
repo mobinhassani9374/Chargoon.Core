@@ -58,7 +58,7 @@ namespace Chargoon.Core.Controllers
                 }
             }
 
-            return Ok(ServiceResult.Error());
+            return Ok(ServiceResult.Error("model is not valid"));
         }
     }
 }
