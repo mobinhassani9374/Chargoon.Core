@@ -1,17 +1,29 @@
 import React, { Component } from 'react'
 import { Col, Row, FormGroup, ControlLabel, FormControl, Button, Panel } from 'react-bootstrap';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import { actionCreators } from '../store/authorize';
+import { bindActionCreators } from 'redux';
 
-export default class Login extends Component {
+class Login extends Component {
+
+    componentDidMount() {
+        debugger
+        let token = localStorage.getItem('token')
+        if (token !== null) {
+            let { history } = this.props
+            history.push('/')
+        }
+    }
     state = {
         phoneNumber: '',
-        code:'',
+        code: '',
         verify: false,
     }
 
     handleChange = (event) => {
-        let {verify} = this.state;
-        if(verify) {
+        let { verify } = this.state;
+        if (verify) {
             this.setState({ code: event.target.value })
         }
         else {
@@ -21,7 +33,7 @@ export default class Login extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault()
-        let { phoneNumber, verify , code } = this.state;
+        let { phoneNumber, verify, code } = this.state;
         if (!verify) {
             if (phoneNumber === '') {
                 return alert('phoneNumber is empty ... ')
@@ -41,18 +53,24 @@ export default class Login extends Component {
         }
 
         else {
-            console.log('hello verfify')
-            console.log(phoneNumber,code)
-
-            if(code==='') {
-               return alert('code is empty ...')
+            if (code === '') {
+                return alert('code is empty ...')
             }
 
-            axios.post('/api/account/verify',{
-                phoneNumber , activationCode : code
-            }).then(res=>{
-                debugger
-            }).catch(error=>{
+            axios.post('/api/account/verify', {
+                phoneNumber, activationCode: code
+            }).then(res => {
+                if (!res.data.isSuccessed) {
+                    alert(res.data.message)
+                }
+                else {
+                    localStorage.setItem("token", res.data.message);
+                    this.props.authTrue();
+                    let { history } = this.props
+                    history.push('/')
+
+                }
+            }).catch(error => {
                 alert(error)
             })
         }
@@ -98,3 +116,13 @@ export default class Login extends Component {
         )
     }
 }
+
+const mapPropsToState = (state) => {
+    return state;
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators(actionCreators, dispatch);
+}
+
+export default connect(mapPropsToState, mapDispatchToProps)(Login);

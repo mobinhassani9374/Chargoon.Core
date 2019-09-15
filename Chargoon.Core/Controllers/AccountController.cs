@@ -66,7 +66,7 @@ namespace Chargoon.Core.Controllers
         }
 
         [HttpPost("[action]")]
-        public IActionResult Verifiy([FromBody]VerificationModel verificationModel)
+        public IActionResult Verify([FromBody]VerificationModel verificationModel)
         {
             if (ModelState.IsValid)
             {

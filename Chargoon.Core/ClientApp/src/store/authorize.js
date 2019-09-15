@@ -9,13 +9,14 @@ export const actionCreators = {
 
 export const reducer = (state, action) => {
   state = state || initialState;
+    console.log(action)
 
   if (action.type === authTrue) {
-    return { ...state, auth: true};
+    return {auth:true};
   }
 
   if (action.type === authFalse) {
-    return { ...state, auth: false };
+    return {auth:false};
   }
 
   return state;
