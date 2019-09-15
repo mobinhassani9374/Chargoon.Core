@@ -1,8 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { actionCreators } from '../store/authorize';
+import { bindActionCreators } from 'redux';
 
 const Home = props => (
+  
   <div>
+    {console.log(props)}
     <h1>Hello, world!</h1>
     <p>Welcome to your new single-page application, built with:</p>
     <ul>
@@ -20,4 +24,14 @@ const Home = props => (
   </div>
 );
 
-export default connect()(Home);
+const mapPropsToState=(state)=>{
+  console.log(state);
+  return state;
+}
+
+const mapDispatchToProps=(dispatch)=>{
+  return bindActionCreators(actionCreators, dispatch);
+}
+
+export default connect(mapPropsToState , mapDispatchToProps)(Home);
+
