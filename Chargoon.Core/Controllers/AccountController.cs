@@ -66,11 +66,41 @@ namespace Chargoon.Core.Controllers
         }
 
         [HttpPost("[action]")]
-        public IActionResult Verify()
+        public IActionResult LoginVerification([FromBody]LoginVerificationModel loginVerificationModel)
         {
-            var token = _jwtTokenGenerator.Generate();
+            if (ModelState.IsValid)
+            {
+                var user = _userRepository.FindByPhoneNumber(loginVerificationModel.PhoneNumber);
 
-            return Ok(token);
+                if (user == null) return Ok(ServiceResult.Error("کاربری یافت نشد"));
+
+                else
+                {
+                    if (user.ActivationCode == loginVerificationModel.ActivationCode)
+                    {
+                        // check time
+                        var nowDate = DateTime.Now;
+
+                        var elabsedTime = nowDate - user.CreateActivationCodeDate;
+
+                        if (elabsedTime.Duration().TotalSeconds > 240)
+                        {
+                            return Ok(ServiceResult.Error("کد فعالسازی اعتباری ندارد"));
+                        }
+                        else
+                        {
+                            var token = _jwtTokenGenerator.Generate(user);
+                            return Ok(ServiceResult.Okay(token));
+                        }
+                    }
+
+                    else return Ok(ServiceResult.Error("کد فعالسازی نامعتبر می باشد"));
+
+                }
+            }
+
+
+            return Ok(ServiceResult.Error("model is not valid"));
         }
     }
 }

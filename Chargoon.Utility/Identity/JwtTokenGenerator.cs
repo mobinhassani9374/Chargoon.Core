@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Chargoon.DomainModels.Entities;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -15,9 +16,12 @@ namespace Chargoon.Utility.Identity
         {
             jwtTokenModel = options.Value;
         }
-        public string Generate()
+        public string Generate(User user)
         {
             var claims = new List<Claim>();
+
+            claims.Add(new Claim(ClaimTypes.SerialNumber,user.SerialNumber));
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtTokenModel.Key));
 
