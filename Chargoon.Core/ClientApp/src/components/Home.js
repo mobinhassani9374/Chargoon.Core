@@ -6,7 +6,6 @@ import { bindActionCreators } from 'redux';
 const Home = props => (
   
   <div>
-    {console.log(props)}
     <h1>Hello, world!</h1>
     <p>Welcome to your new single-page application, built with:</p>
     <ul>
@@ -25,7 +24,6 @@ const Home = props => (
 );
 
 const mapPropsToState=(state)=>{
-  console.log(state);
   return state;
 }
 
