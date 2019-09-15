@@ -54,7 +54,7 @@ namespace Chargoon.Core.Controllers
                     }
 
                     else
-                        return Ok(ServiceResult.Error(smsResponse.Message));
+                        return Ok(ServiceResult.Error($"خطا در ارسال پیامک از سمت پیامک سفید : {smsResponse.Message}"));
                 }
             }
 

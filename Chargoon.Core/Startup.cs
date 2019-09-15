@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Chargoon.DataLayer.Repositories;
 using Chargoon.Messaging;
+using Chargoon.Messaging.Setting;
 
 namespace Chargoon.Core
 {
@@ -42,6 +43,8 @@ namespace Chargoon.Core
             services.AddScoped<Functions>();
             services.AddScoped<RequestProvider>();
             services.AddScoped<SmsService>();
+
+            services.Configure<Key>(config => Configuration.GetSection("WhiteSMSConfig").Bind(config));
 
             services.AddDbContext<AppDbContext>(options=> 
             {
