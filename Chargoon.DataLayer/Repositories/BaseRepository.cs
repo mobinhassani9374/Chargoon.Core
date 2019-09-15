@@ -3,6 +3,7 @@ using Chargoon.DomainModels.Entities;
 using Chargoon.Utility;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Chargoon.DataLayer.Repositories
@@ -26,6 +27,11 @@ namespace Chargoon.DataLayer.Repositories
         {
             _context.Update(entity);
             return Save();
+        }
+
+        public IQueryable<TEntity> AsQueryable()
+        {
+            return _context.Set<TEntity>().AsQueryable();
         }
 
         public ServiceResult Save()
