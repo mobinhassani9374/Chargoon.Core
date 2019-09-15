@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Chargoon.DomainModels.Models
 {
-    public class LoginVerificationModel
+    public class VerificationModel
     {
         [Required(ErrorMessage = "شماره همراه نمی تواند فاقد مقدار باشد")]
         public string PhoneNumber { get; set; }

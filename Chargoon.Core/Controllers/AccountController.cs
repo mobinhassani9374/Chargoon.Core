@@ -66,17 +66,17 @@ namespace Chargoon.Core.Controllers
         }
 
         [HttpPost("[action]")]
-        public IActionResult LoginVerification([FromBody]LoginVerificationModel loginVerificationModel)
+        public IActionResult Verifiy([FromBody]VerificationModel verificationModel)
         {
             if (ModelState.IsValid)
             {
-                var user = _userRepository.FindByPhoneNumber(loginVerificationModel.PhoneNumber);
+                var user = _userRepository.FindByPhoneNumber(verificationModel.PhoneNumber);
 
                 if (user == null) return Ok(ServiceResult.Error("کاربری یافت نشد"));
 
                 else
                 {
-                    if (user.ActivationCode == loginVerificationModel.ActivationCode)
+                    if (user.ActivationCode ==verificationModel.ActivationCode)
                     {
                         // check time
                         var nowDate = DateTime.Now;
