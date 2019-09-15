@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Chargoon.DataLayer.Repositories;
+using Chargoon.Messaging;
 
 namespace Chargoon.Core
 {
@@ -34,6 +35,13 @@ namespace Chargoon.Core
                 configuration.RootPath = "ClientApp/build";
             });
 
+
+            services.AddHttpClient();
+
+            // sms 
+            services.AddScoped<Functions>();
+            services.AddScoped<RequestProvider>();
+            services.AddScoped<SmsService>();
 
             services.AddDbContext<AppDbContext>(options=> 
             {

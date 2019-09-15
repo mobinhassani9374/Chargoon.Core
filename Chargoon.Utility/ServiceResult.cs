@@ -19,5 +19,15 @@ namespace Chargoon.Utility
         {
             return new ServiceResult() { IsSuccessed = false, Message = "عملیات با خطا مواجه شد مجددا تلاش کنید" };
         }
+
+        public static ServiceResult Okay(string message)
+        {
+            return new ServiceResult() { IsSuccessed = true, Message = message };
+        }
+
+        public static ServiceResult Error(string message)
+        {
+            return new ServiceResult() { IsSuccessed = false, Message = message };
+        }
     }
 }

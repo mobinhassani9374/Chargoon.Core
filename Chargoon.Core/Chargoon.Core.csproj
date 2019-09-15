@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Chargoon.DataLayer\Chargoon.DataLayer.csproj" />
+    <ProjectReference Include="..\Chargoon.Messaging\Chargoon.Messaging.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
