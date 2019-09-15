@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Col, Row, FormGroup, ControlLabel, FormControl, Button, Panel} from 'react-bootstrap';
+import axios from 'axios';
 
 export default class Login extends Component {
     state = {
@@ -14,8 +15,15 @@ export default class Login extends Component {
         event.preventDefault()
         let {value} = this.state;
         if(value=='') {
-            alert('phoneNumber is empty ... ')
+           return alert('phoneNumber is empty ... ')
         }
+        axios.post('/api/account/login',{
+            phoneNumber:value
+        }).then(res=>{
+            debugger
+        }).catch(error=>{
+            alert('error server 500 ')
+        })
     }
     render() {
         return (
