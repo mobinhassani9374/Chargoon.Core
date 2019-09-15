@@ -1,3 +1,4 @@
+using Chargoon.DataLayer.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -5,17 +6,21 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 
 namespace Chargoon.Core
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IConfigurationRoot Configuration;
+        public Startup(IHostingEnvironment env)
         {
-            Configuration = configuration;
+            Configuration = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile(path: "appsettings.json", optional: false, reloadOnChange: true)
+                .Build();
         }
 
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -27,11 +32,20 @@ namespace Chargoon.Core
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
+
+            services.AddDbContext<AppDbContext>(options=> 
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env,AppDbContext db)
         {
+            // db init 
+            db.Database.Migrate();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
