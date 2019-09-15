@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Chargoon.DataLayer.Repositories;
 using Chargoon.Messaging;
 using Chargoon.Messaging.Setting;
+using Chargoon.Utility.Identity;
 
 namespace Chargoon.Core
 {
@@ -43,10 +44,15 @@ namespace Chargoon.Core
             services.AddScoped<Functions>();
             services.AddScoped<RequestProvider>();
             services.AddScoped<SmsService>();
-
             services.Configure<Key>(config => Configuration.GetSection("WhiteSMSConfig").Bind(config));
 
-            services.AddDbContext<AppDbContext>(options=> 
+            // jwtToken
+            services.AddScoped<JwtTokenGenerator>();
+            services.Configure<JwtTokenModel>(config => Configuration.GetSection("JwtToken").Bind(config));
+
+
+            // dbContext
+            services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
@@ -55,7 +61,7 @@ namespace Chargoon.Core
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env,AppDbContext db)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, AppDbContext db)
         {
             // db init 
             db.Database.Migrate();
